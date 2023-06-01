@@ -29,35 +29,14 @@ public class OpportunitiesServiceImpl implements OpportunitiesService {
 		this.opportunitiesDao = opportunitiesDao;
 	}
 
-	@Override
-	public void deleteOpportunities(String opp_id) {
-		opportunitiesDao.deleteById(opp_id);
-		;
-	}
+	
 
 	@Override
 	public List<Opportunities> getOpportunities() {
 		return opportunitiesDao.findAll();
 	}
 
-	@Override
-	public Opportunities updateOpportunities(Opportunities opportunities) {
-		Opportunities opp = opportunitiesDao.findByUsername(opportunities.getUsername());
-		opp.setCompanyName(opportunities.getCompanyName());
-		opp.setDeadline(opportunities.getDeadline());
-		opp.setLocation(opportunities.getLocation());
-		opp.setTitle(opportunities.getTitle());
-		opp.setUrl(opportunities.getUrl());
-		return opportunitiesDao.save(opp);
-	}
-
-	@Override
-	public Opportunities storeLogo(MultipartFile file) throws IOException {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		Opportunities FileDB = new Opportunities(file.getBytes(), fileName, file.getContentType());
-		FileDB.setUsername(random());
-		return opportunitiesDao.save(FileDB);
-	}
+	
 
 	@Override
 	public Opportunities findByUsername(String username) {
@@ -90,6 +69,19 @@ public class OpportunitiesServiceImpl implements OpportunitiesService {
 
 		String randomString = sb.toString();
 		return randomString;
+	}
+
+	@Override
+	public Opportunities findById(Long id) {
+		return opportunitiesDao.findById(id).get();
+			
+	}
+
+
+
+	@Override
+	public Opportunities createOpportunities(Opportunities opportunities) {
+		return opportunitiesDao.save(opportunities);
 	}
 
 }

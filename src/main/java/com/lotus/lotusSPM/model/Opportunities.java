@@ -18,17 +18,9 @@ public class Opportunities implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String uuid;
-
 	private Long id;
 	private String username;
-
-	private String logoName;
-
-	private String logoType;
-
+	private String text;
 	@Lob
 	private byte[] logo;
 
@@ -42,20 +34,15 @@ public class Opportunities implements Serializable {
 
 	}
 
-	public Opportunities(byte[] logo, String logoName, String logoType) {
-		super();
-		this.logo = logo;
-		this.logoName = logoName;
-		this.logoType = logoType;
-	}
+	
 
-	public Opportunities(String uuid, String username, String logoName, String logoType, byte[] logo, String url,
+	public Opportunities(String uuid, String username, String text, String logoType, byte[] logo, String url,
 			String location, String title, String companyName, String deadline, Long id) {
 		super();
-		this.uuid = uuid;
+	
 		this.username = username;
-		this.logoName = logoName;
-		this.logoType = logoType;
+		this.text = text;
+	
 		this.logo = logo;
 		this.url = url;
 		this.location = location;
@@ -79,18 +66,11 @@ public class Opportunities implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(Long opp_id) {
+		this.id = opp_id;
 	}
 
-	@Column(name = "UUID")
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
+	
 
 	@Column(name = "URL")
 	public String getUrl() {
@@ -146,22 +126,14 @@ public class Opportunities implements Serializable {
 		this.logo = logo;
 	}
 
-	@Column(name = "LOGO_NAME")
-	public String getLogoName() {
-		return logoName;
+	@Column(name = "TEXT")
+	public String getText() {
+		return text;
 	}
 
-	public void setLogoName(String logoName) {
-		this.logoName = logoName;
+	public void setText(String text) {
+		this.text = text;
 	}
 
-	@Column(name = "LOGO_TYPE")
-	public String getLogoType() {
-		return logoType;
-	}
-
-	public void setLogoType(String logoType) {
-		this.logoType = logoType;
-	}
 
 }

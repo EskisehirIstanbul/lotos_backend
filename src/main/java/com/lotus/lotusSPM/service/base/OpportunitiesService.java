@@ -9,10 +9,8 @@ import com.lotus.lotusSPM.model.Opportunities;
 
 public interface OpportunitiesService {
 
-	void deleteOpportunities(String opp_id);
 	List<Opportunities> getOpportunities();
-	Opportunities updateOpportunities(Opportunities opportunities);
-	Opportunities storeLogo(MultipartFile file) throws IOException;
-	//Opportunities findById(Long opp_id);
+	Opportunities createOpportunities(Opportunities opportunities);
+	Opportunities findById(Long id);
 	Opportunities findByUsername(String username);
 }

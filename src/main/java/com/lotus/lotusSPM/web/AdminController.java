@@ -35,8 +35,8 @@ public class AdminController {
 	@GetMapping("/admin/{id}")
 	public ResponseEntity<Object> getAdmin(@PathVariable("id") Long id) {
 
-		Admin stock = adminService.findAdminById(id);
-		return ResponseEntity.ok(stock);
+		Admin admin = adminService.findAdminById(id);
+		return ResponseEntity.ok(admin);
 
 	}
 

@@ -15,4 +15,5 @@ public class LotusSpmApplication {
 		SpringApplication.run(LotusSpmApplication.class, args);
 	}
 
+	
 }

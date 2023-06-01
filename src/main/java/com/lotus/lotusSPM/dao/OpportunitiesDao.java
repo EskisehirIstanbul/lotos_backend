@@ -11,9 +11,11 @@ import com.lotus.lotusSPM.model.Opportunities;
 import com.lotus.lotusSPM.model.Student;
 
 @Repository
-public interface OpportunitiesDao extends JpaRepository<Opportunities, String>, CrudRepository<Opportunities, String> {
+public interface OpportunitiesDao extends JpaRepository<Opportunities, Long>, CrudRepository<Opportunities, Long> {
 
-	Opportunities findByUsername(String opp_id);
+	Opportunities findByUsername(String id);
+	
+
 
 
 }

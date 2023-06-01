@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.lotus.lotusSPM.message.ResponseMessage;
 import com.lotus.lotusSPM.model.Opportunities;
@@ -29,46 +30,20 @@ public class OpportunitiesController {
 	@Autowired
 	private OpportunitiesService opportunitiesService;
 
-	@PutMapping("/opportunitie/{id}")
-	public ResponseEntity<URI> updateOpportunities(@RequestBody Opportunities opportunities,@PathVariable("id") String username) {
+	@PostMapping("/opportunitie")
+	public ResponseEntity<URI> createOpportunitie(@RequestBody Opportunities opportunities) {
 		try {
-			//opportunities.setId(id);
-			opportunities.setUsername(username);
-			opportunitiesService.updateOpportunities(opportunities);
-			return ResponseEntity.ok().build();
+			opportunitiesService.createOpportunities(opportunities);
+			Long id = opportunities.getId();
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+			return ResponseEntity.created(location).build();
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
-	@PostMapping("/uploadLogo")
-	public ResponseEntity<ResponseMessage> uploadLogo(@RequestParam("logo") MultipartFile file) {
-		String message = "";
-	    try {
-	    	opportunitiesService.storeLogo(file);
-
-	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-	      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-	    } catch (Exception e) {
-	      message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
-	    }
-	}
-
-	@DeleteMapping("/opportunitie/{id}")
-	public ResponseEntity<?> deleteOpportunities(@PathVariable("id") String id) {
-		try {
-			opportunitiesService.deleteOpportunities(id);
-			return ResponseEntity.ok().build();
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
-			return ResponseEntity.notFound().build();
-		}
-
-	}
+	
+	
 
 	@GetMapping("/opportunities")
 	public ResponseEntity<Object> getOpportunities() {
@@ -76,4 +51,11 @@ public class OpportunitiesController {
 		return ResponseEntity.ok(opportunities);
 	}
 
+	@GetMapping("/opportunities/{id}")
+	public ResponseEntity<Object> getOpportunities(@PathVariable("id") Long id) {
+
+		Opportunities opp = opportunitiesService.findById(id);
+		return ResponseEntity.ok(opp);
+
+	}
 }
